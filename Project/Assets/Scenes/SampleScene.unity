@@ -815,7 +815,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _plantStatics:
   - {fileID: 11400000, guid: 410691d523ec848bfae704914d221a1a, type: 2}
-  - {fileID: 11400000, guid: c4462d77ef16f4510b95e3ed73dba732, type: 2}
 --- !u!4 &994958671
 Transform:
   m_ObjectHideFlags: 0
@@ -949,6 +948,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 987facb3f915ee1448de651c4747386f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  t_currentTime: 0
+  t_currentState: 0
+  currentPlantObj: {fileID: 0}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
