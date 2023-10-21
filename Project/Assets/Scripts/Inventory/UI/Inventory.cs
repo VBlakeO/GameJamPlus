@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
 
-namespace UI.Inventory
+namespace UI
 {
     public class Inventory : Singleton<Inventory>
     {
@@ -17,7 +17,9 @@ namespace UI.Inventory
         [SerializeField] Transform _itemsContent;
         [SerializeField] GameObject _itemPrefab;
         [Space]
-        Dictionary<string, Plant> _plants;
+        Dictionary<string, Plant> _plantsUI;
+        [SerializeField] List<(string, int)> startPlants;
+        Dictionary<string, int> plants;
         [Space]
         [SerializeField] string _selected;
         public string currentPlant => _selected;
@@ -40,14 +42,15 @@ namespace UI.Inventory
 
         void Start()
         {
-            InstantiatePlants();
+            InstantiatePlantsUI();
+            SelectFirstAvailable();
         }
         #endregion Unity Callbacks
 
 
-        void InstantiatePlants()
+        void InstantiatePlantsUI()
         {
-            _plants = new Dictionary<string, Plant>();
+            _plantsUI = new Dictionary<string, Plant>();
 
             GameObject instance = null;
 
@@ -57,7 +60,18 @@ namespace UI.Inventory
 
                 Plant plant = instance.GetComponent<Plant>();
                 plant.Set(item.Key);
-                _plants.Add(item.Key, plant);
+                _plantsUI.Add(item.Key, plant);
+                instance.SetActive(false);
+            }
+        }
+        void SelectFirstAvailable()
+        {
+            foreach (var plant in plants)
+            {
+                if (plant.Value > 0)
+                {
+                    Select(plant.Key);
+                }
             }
         }
 
@@ -89,11 +103,11 @@ namespace UI.Inventory
         public void Select(string id)
         {
             if (!String.IsNullOrEmpty(_selected))
-                _plants[_selected].OnDeselected();
+                _plantsUI[_selected].OnDeselected();
 
             _selected = id;
 
-            _plants[_selected].OnSelected();
+            _plantsUI[_selected].OnSelected();
 
             if (onSelectedChanged != null)
                 onSelectedChanged.Invoke(id);

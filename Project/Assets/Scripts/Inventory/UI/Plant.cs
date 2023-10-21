@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace UI.Inventory
+namespace UI
 {
     [RequireComponent(typeof(Button))]
     public class Plant : MonoBehaviour
