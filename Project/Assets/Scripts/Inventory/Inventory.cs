@@ -17,11 +17,14 @@ public class Inventory : Singleton<Inventory>, IPersistent
     public Action<string, int> onPlantQuantityChanged;
     public Action<string> onPlantTakeFailed;
 
+    public Action<Data> onInventoryChanged;
+
 
     protected override void Awake()
     {
         base.Awake();
 
+        AddPlant("samplePlant", 8);
         ((IPersistent)this).Subscribe();
     }
 
@@ -66,7 +69,6 @@ public class Inventory : Singleton<Inventory>, IPersistent
             return quantity;
         }
     }
-
     public bool AddPlant(string id)
     {
         if (plants.ContainsKey(id))
@@ -123,7 +125,6 @@ public class Inventory : Singleton<Inventory>, IPersistent
 
         return 0;
     }
-
     public bool TakePlant(string id)
     {
         UI.Inventory.Instance.Select(id);
@@ -150,12 +151,17 @@ public class Inventory : Singleton<Inventory>, IPersistent
 
     void IPersistent.LoadFromJson(string persistentDataPath)
     {
+        Debug.Log("trying to save");
         if (!File.Exists(persistentDataPath + _persistentPath))
             return;
 
-        _data = JsonConvert.DeserializeObject<Data>(File.ReadAllText(persistentDataPath + _persistentPath));
-    }
+        Debug.Log("saving");
 
+        _data = JsonConvert.DeserializeObject<Data>(File.ReadAllText(persistentDataPath + _persistentPath));
+
+        if (_data != null)
+            onInventoryChanged.Invoke(_data);
+    }
     void IPersistent.SaveAsJson(string persistentDataPath)
     {
         File.WriteAllText(persistentDataPath + _persistentPath + ".json", JsonConvert.SerializeObject(_data));

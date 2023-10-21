@@ -6,8 +6,14 @@ namespace UI
     [RequireComponent(typeof(Button))]
     public class Plant : MonoBehaviour
     {
-        [SerializeField] string id;
-        [SerializeField] Image image;
+        [SerializeField] string _id;
+        public string id => _id;
+
+        [SerializeField] Image _icon;
+        public Image icon => _icon;
+
+        [SerializeField] Text _quantity;
+        public Text quantity => _quantity;
 
         [SerializeField] GameObject selected;
 
@@ -18,8 +24,8 @@ namespace UI
 
         public void Set(string id)
         {
-            this.id = id;
-            image.sprite = PlantStaticsHolder.Instance.plantStatics[id].icon;
+            this._id = id;
+            icon.sprite = PlantStaticsHolder.Instance.plantStatics[id].icon;
         }
 
         public void OnSelectedChanged(bool b)

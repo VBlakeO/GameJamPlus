@@ -70,6 +70,21 @@ namespace UI
                 instance.SetActive(false);
             }
         }
+        void UpdatePlantsQuantity()
+        {
+            foreach (var plant in Inventory.Instance.plants)
+            {
+                _plantsUI[plant.Key].quantity.text = plant.Value.ToString();
+            }
+        }
+        void UpdatePlantQuantity(string id)
+        {
+
+        }
+        void UpdatePlantQuantity(string id, int quantity)
+        {
+
+        }
         void SelectFirstAvailable()
         {
             foreach (var plant in plants)
