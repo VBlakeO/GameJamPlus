@@ -145,11 +145,17 @@ namespace UI
             if (id == _selected)
                 return;
 
-            if (!global::Inventory.Instance.plants.TryGetValue(id, out _)) //quantity 0
+            if (!global::Inventory.Instance.plants.TryGetValue(id, out _))
+            {
+                Debug.Log("Trying to select '" + id + "' failed because it doesnt exist");
                 return;
+            }
 
             if (global::Inventory.Instance.plants[id] <= 0) //quantity 0
+            {
+                Debug.Log("Trying to select '" + id + "' failed because quantity is 0");
                 return;
+            }
 
             if (!String.IsNullOrEmpty(_selected))
                 _plantsUI[_selected].OnDeselected();
