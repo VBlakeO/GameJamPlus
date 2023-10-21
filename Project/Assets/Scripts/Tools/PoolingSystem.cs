@@ -4,7 +4,7 @@ using UnityEngine;
 public class PoolingSystem : MonoBehaviour
 {   
     private bool collectionChecks = true;
-    [SerializeField] private int maxPoolSize = 10;
+    [SerializeField] private int maxPoolSize = 12;
 
     public string id = "";
     public GameObject plant;
@@ -24,6 +24,7 @@ public class PoolingSystem : MonoBehaviour
     {
         var go = Instantiate(plant);
         go.SetActive(false);
+        go.transform.parent = transform;
 
         // This is used to return ParticleSystems to the pool when they have stopped.
         var returnToPool = go.AddComponent<ReturnToPool>();
