@@ -7,13 +7,16 @@ namespace UI.Inventory
 {
     public class Inventory : Singleton<Inventory>
     {
-        [SerializeField] bool isOpen = false;
+        [SerializeField] bool _isOpen = false;
         [Space]
-        float tweenStartPositionY;
-        public float tweenTargetPositionY;
+        [SerializeField] RectTransform _tweenTransform;
+        float _tweenStartPositionY;
+        [SerializeField] float _tweenTargetPositionY;
+        [SerializeField] float _tweenDuration = .5f;
         [Space]
-        [SerializeField] Transform _plantsContent;
-        [SerializeField] GameObject _plantPrefab;
+        [SerializeField] Transform _itemsContent;
+        [SerializeField] GameObject _itemPrefab;
+        [Space]
         Dictionary<string, Plant> _plants;
         [Space]
         [SerializeField] string _selected;
@@ -21,10 +24,12 @@ namespace UI.Inventory
         public Action<string> onSelectedChanged;
 
 
+        #region Unity Callbacks
         protected override void Awake()
         {
             base.Awake();
-            tweenStartPositionY = transform.position.y;
+
+            _tweenStartPositionY = transform.position.y;
         }
 
         void Update()
@@ -35,10 +40,12 @@ namespace UI.Inventory
 
         void Start()
         {
-            InstantiateItems();
+            InstantiatePlants();
         }
+        #endregion Unity Callbacks
 
-        void InstantiateItems()
+
+        void InstantiatePlants()
         {
             _plants = new Dictionary<string, Plant>();
 
@@ -46,7 +53,7 @@ namespace UI.Inventory
 
             foreach (KeyValuePair<string, PlantStatic> item in PlantStaticsHolder.Instance.plantStatics)
             {
-                instance = MonoBehaviour.Instantiate(_plantPrefab, _plantsContent);
+                instance = MonoBehaviour.Instantiate(_itemPrefab, _itemsContent);
 
                 Plant plant = instance.GetComponent<Plant>();
                 plant.Set(item.Key);
@@ -56,28 +63,27 @@ namespace UI.Inventory
 
         public void SetState(bool b)
         {
-            if (isOpen == b)
+            if (_isOpen == b)
                 return;
 
             SwitchState();
         }
         public void SwitchState()
         {
-            isOpen = !isOpen;
+            _isOpen = !_isOpen;
 
-            if (isOpen)
+            if (_isOpen)
                 Show();
             else
                 Hide();
         }
         public void Show()
         {
-            transform.DOMoveY(tweenTargetPositionY, .5f);
+            _tweenTransform.DOAnchorPos3DY(_tweenTargetPositionY, _tweenDuration);
         }
-
         public void Hide()
         {
-            transform.DOMoveY(tweenStartPositionY, .5f);
+            _tweenTransform.DOAnchorPos3DY(_tweenStartPositionY, _tweenDuration);
         }
 
         public void Select(string id)
