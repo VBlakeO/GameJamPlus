@@ -155,7 +155,7 @@ public class Inventory : Singleton<Inventory>, IPersistent
     }
     void IPersistent.SaveAsJson(string persistentDataPath)
     {
-        File.WriteAllText(persistentDataPath + _persistentPath, JsonConvert.SerializeObject(_data));
+        File.WriteAllText(persistentDataPath + _persistentPath, JsonConvert.SerializeObject(_data, Formatting.Indented));
     }
     void IPersistent.LoadFromJson(string persistentDataPath)
     {
