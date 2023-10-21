@@ -23,7 +23,9 @@ namespace UI
         [Space]
         [SerializeField] string _selected;
         public string selected => _selected;
-        public string currentPlant => _selected;
+
+        [SerializeField] GameObject selectedDisplay;
+
         public Action<string> onSelectedChanged;
 
 
@@ -34,17 +36,20 @@ namespace UI
 
             _tweenStartPositionY = transform.position.y;
         }
+        
+        void Start()
+        {
+            InstantiatePlantsUI();
+            SelectFirstAvailable();
+
+            global::Inventory.Instance.onPlantTakeFailed += (id) => selectedDisplay.GetComponent<RectTransform>().DOShakePosition(.5f, 3);
+
+        }
 
         void Update()
         {
             if (Input.GetKeyDown(KeyCode.I))
                 SwitchState();
-        }
-
-        void Start()
-        {
-            InstantiatePlantsUI();
-            SelectFirstAvailable();
         }
         #endregion Unity Callbacks
 
@@ -103,6 +108,9 @@ namespace UI
 
         public void Select(string id)
         {
+            if (id == _selected)
+                return;
+
             if (!String.IsNullOrEmpty(_selected))
                 _plantsUI[_selected].OnDeselected();
 
