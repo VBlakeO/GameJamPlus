@@ -145,6 +145,12 @@ namespace UI
             if (id == _selected)
                 return;
 
+            if (!global::Inventory.Instance.plants.TryGetValue(id, out _)) //quantity 0
+                return;
+
+            if (global::Inventory.Instance.plants[id] <= 0) //quantity 0
+                return;
+
             if (!String.IsNullOrEmpty(_selected))
                 _plantsUI[_selected].OnDeselected();
 
