@@ -11,7 +11,7 @@ public class Persistent : Singleton<Persistent>
     protected override void Awake()
     {
         base.Awake();
-        _persistentDataPath = Application.persistentDataPath + "/Persistent";
+        _persistentDataPath = Application.persistentDataPath;
     }
 
     protected override void OnApplicationQuit()
