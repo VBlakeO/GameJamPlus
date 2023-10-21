@@ -6,7 +6,7 @@ using System.IO;
 
 public class Inventory : Singleton<Inventory>, IPersistent
 {
-    string _persistentPath = "/Inventory.json";
+    string _persistentPath = "/Inventory";
 
     [SerializeField] int maxQuantity = 99;
      Dictionary<string, int> plants => data.plants; //<id, quantity>
