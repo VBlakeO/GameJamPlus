@@ -9,22 +9,21 @@ public class Inventory : Singleton<Inventory>, IPersistent
     string _persistentPath = "/Inventory";
 
     [SerializeField] int maxQuantity = 99;
-     Dictionary<string, int> plants => data.plants; //<id, quantity>
+    public Dictionary<string, int> plants => data.plants; //<id, quantity>
 
     [SerializeField] Data _data = new Data();
     public Data data => _data;
 
+    public Action<Data> onInventoryChanged;
     public Action<string, int> onPlantQuantityChanged;
     public Action<string> onPlantTakeFailed;
 
-    public Action<Data> onInventoryChanged;
 
 
     protected override void Awake()
     {
         base.Awake();
 
-        AddPlant("samplePlant", 8);
         ((IPersistent)this).Subscribe();
     }
 
@@ -166,7 +165,6 @@ public class Inventory : Singleton<Inventory>, IPersistent
         }
 
         _data = JsonConvert.DeserializeObject<Data>(File.ReadAllText(persistentDataPath + _persistentPath));
-
         if (onInventoryChanged != null)
             onInventoryChanged.Invoke(_data);
     }

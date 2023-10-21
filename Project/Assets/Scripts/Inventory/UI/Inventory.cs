@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
+using UnityEngine.UI;
 
 namespace UI
 {
@@ -19,12 +20,12 @@ namespace UI
         [Space]
         Dictionary<string, Plant> _plantsUI;
         [SerializeField] List<(string, int)> startPlants;
-        Dictionary<string, int> plants = new Dictionary<string, int>();
         [Space]
         [SerializeField] string _selected;
         public string selected => _selected;
 
         [SerializeField] GameObject selectedDisplay;
+        [SerializeField] Image selectedIcon;
 
         public Action<string> onSelectedChanged;
 
@@ -35,15 +36,21 @@ namespace UI
             base.Awake();
 
             _tweenStartPositionY = transform.position.y;
+
+
         }
-        
+
         void Start()
         {
             InstantiatePlantsUI();
-            SelectFirstAvailable();
 
+            UpdatePlantsQuantity(global::Inventory.Instance.plants);
+
+            global::Inventory.Instance.onInventoryChanged += (data) => UpdatePlantsQuantity(data.plants);
+            global::Inventory.Instance.onPlantQuantityChanged += (id, value) => UpdatePlantQuantity(id, value);
             global::Inventory.Instance.onPlantTakeFailed += (id) => selectedDisplay.GetComponent<RectTransform>().DOShakePosition(.5f, 3);
 
+            SelectFirstAvailable();
         }
 
         void Update()
@@ -70,30 +77,42 @@ namespace UI
                 instance.SetActive(false);
             }
         }
-        void UpdatePlantsQuantity()
+
+        void UpdatePlantsQuantity() => UpdatePlantsQuantity(global::Inventory.Instance.plants);
+        void UpdatePlantsQuantity(Dictionary<string, int> data)
         {
-            foreach (var plant in Inventory.Instance.plants)
+            foreach (var plant in data)
             {
-                _plantsUI[plant.Key].quantity.text = plant.Value.ToString();
+                UpdatePlantQuantity(plant.Key, plant.Value);
             }
         }
+
         void UpdatePlantQuantity(string id)
         {
-
+            int quantity = global::Inventory.Instance.plants[id];
+            UpdatePlantQuantity(id, quantity);
         }
         void UpdatePlantQuantity(string id, int quantity)
         {
+            _plantsUI[id].quantity.text = quantity.ToString();
+            _plantsUI[id].gameObject.SetActive(quantity > 0);
 
+            if (String.IsNullOrEmpty(selected) || (selected == id && quantity == 0))
+                SelectFirstAvailable();
         }
+
         void SelectFirstAvailable()
         {
-            foreach (var plant in plants)
+            foreach (var plant in global::Inventory.Instance.plants)
             {
                 if (plant.Value > 0)
                 {
                     Select(plant.Key);
+                    return;
                 }
             }
+
+            Select("");
         }
 
         public void SetState(bool b)
@@ -132,6 +151,18 @@ namespace UI
             _selected = id;
 
             _plantsUI[_selected].OnSelected();
+
+            if (!String.IsNullOrEmpty(_selected))
+            {
+                selectedIcon.sprite = PlantStaticsHolder.Instance.plantStatics[id].icon;
+                selectedIcon.enabled = true;
+            }
+            else
+            {
+                selectedIcon.sprite = null;
+                selectedIcon.enabled = false;
+            }
+
 
             if (onSelectedChanged != null)
                 onSelectedChanged.Invoke(id);
