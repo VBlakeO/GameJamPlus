@@ -3,8 +3,7 @@ using UnityEngine;
 
 public class Persistent : Singleton<Persistent>
 {
-    string _persistentDataPath;
-    public string persistentDataPath => _persistentDataPath;
+    public string persistentDataPath { get; private set; }
 
     public Action<string> onSave; //string path
     public Action<string> onLoad; //string path
@@ -12,7 +11,8 @@ public class Persistent : Singleton<Persistent>
     protected override void Awake()
     {
         base.Awake();
-        _persistentDataPath = Application.persistentDataPath;
+        persistentDataPath = Application.persistentDataPath;
+        Debug.Log(persistentDataPath);
     }
 
     protected override void OnApplicationQuit()
@@ -29,12 +29,12 @@ public class Persistent : Singleton<Persistent>
     public void Save()
     {
         if (onSave != null)
-            onSave.Invoke(_persistentDataPath);
+            onSave.Invoke(persistentDataPath);
     }
 
     public void Load()
     {
         if (onLoad != null)
-            onLoad.Invoke(_persistentDataPath);
+            onLoad.Invoke(persistentDataPath);
     }
 }

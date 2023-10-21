@@ -149,23 +149,28 @@ public class Inventory : Singleton<Inventory>, IPersistent
         return false;
     }
 
-    void IPersistent.LoadFromJson(string persistentDataPath)
+    bool IPersistent.HasJsonSave(string persistentDataPath)
     {
-        Debug.Log("trying to save");
-        if (!File.Exists(persistentDataPath + _persistentPath))
-            return;
-
-        Debug.Log("saving");
-
-        _data = JsonConvert.DeserializeObject<Data>(File.ReadAllText(persistentDataPath + _persistentPath));
-
-        if (_data != null)
-            onInventoryChanged.Invoke(_data);
+        return File.Exists(persistentDataPath + _persistentPath);
     }
     void IPersistent.SaveAsJson(string persistentDataPath)
     {
-        File.WriteAllText(persistentDataPath + _persistentPath + ".json", JsonConvert.SerializeObject(_data));
+        File.WriteAllText(persistentDataPath + _persistentPath, JsonConvert.SerializeObject(_data));
     }
+    void IPersistent.LoadFromJson(string persistentDataPath)
+    {
+        if (!((IPersistent)this).HasJsonSave(persistentDataPath))
+        {
+            ((IPersistent)this).SaveAsJson(persistentDataPath);
+            return;
+        }
+
+        _data = JsonConvert.DeserializeObject<Data>(File.ReadAllText(persistentDataPath + _persistentPath));
+
+        if (onInventoryChanged != null)
+            onInventoryChanged.Invoke(_data);
+    }
+
 
     [Serializable]
     public class Data
