@@ -70,30 +70,10 @@ public class Inventory : Singleton<Inventory>, IPersistent
     }
     public bool AddPlant(string id)
     {
-        if (plants.ContainsKey(id))
-        {
-            if (plants[id] < plants[id])
-            {
-                plants[id]++;
-
-                if (onPlantQuantityChanged != null)
-                    onPlantQuantityChanged.Invoke(id, plants[id]);
-            }
-            else //reached max qnt
-                return false;
-        }
-        else
-        {
-            plants.Add(id, 1);
-
-            if (onPlantQuantityChanged != null)
-                onPlantQuantityChanged.Invoke(id, plants[id]);
-        }
-
-        return true;
+        return AddPlant(id, 1) >= 1;
     }
 
-    public int TakePlants(string id, int quantity)
+    public int TakePlant(string id, int quantity)
     {
         UI.Inventory.Instance.Select(id);
 
@@ -126,26 +106,7 @@ public class Inventory : Singleton<Inventory>, IPersistent
     }
     public bool TakePlant(string id)
     {
-        UI.Inventory.Instance.Select(id);
-
-        if (plants.ContainsKey(id))
-        {
-            if (plants[id] > 0)
-            {
-                plants[id]--;
-
-
-                if (onPlantQuantityChanged != null)
-                    onPlantQuantityChanged.Invoke(id, plants[id]);
-
-                return true;
-            }
-        }
-
-        if (onPlantTakeFailed != null)
-            onPlantTakeFailed.Invoke(id);
-
-        return false;
+        return TakePlant(id, 1) >= 1;
     }
 
     bool IPersistent.HasJsonSave(string persistentDataPath)

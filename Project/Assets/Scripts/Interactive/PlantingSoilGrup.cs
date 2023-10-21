@@ -14,7 +14,7 @@ public class PlantingSoilGrup : MonoBehaviour, IInteract
 
     public void Interact()
     {
-        int _seedsAvailable = Inventory.Instance.TakePlants(UI.Inventory.Instance.selected, plantingSoils.Count);
+        int _seedsAvailable = Inventory.Instance.TakePlant(UI.Inventory.Instance.selected, plantingSoils.Count);
         
         if (_seedsAvailable == 0)
             return;
