@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 namespace UI
 {
@@ -12,8 +13,8 @@ namespace UI
         [SerializeField] Image _icon;
         public Image icon => _icon;
 
-        [SerializeField] Text _quantity;
-        public Text quantity => _quantity;
+        [SerializeField] TextMeshProUGUI _quantity;
+        public TextMeshProUGUI quantity => _quantity;
 
         [SerializeField] GameObject selected;
 
