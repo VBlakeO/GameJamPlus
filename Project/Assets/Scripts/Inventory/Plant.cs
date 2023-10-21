@@ -1,3 +1,4 @@
+using System.Runtime.InteropServices;
 using UnityEngine;
 
 [SerializeField]
@@ -6,10 +7,16 @@ public class Plant
     public string id => _static.id;
     public string name => _static.name;
     public Sprite icon => _static.icon;
-    public GameObject[] plantStateObjects => _static.plantStateObjects;
 
-    PlantStatic _static;
-    public PlantState PlantState {get; private set;}
+    public float budStateDuration => _static.budStateDuration;
+    public float foliageStateDuration => _static.foliageStateDuration;
+    public float rootStateDuration => _static.rootStateDuration;
+
+    public GameObject[] plantStateObjects => _static.plantStateObjects;
+    private PlantStatic _static;
+
+    public float currentTime;
+    public PlantState PlantState = PlantState.BUD;
 
     public Plant(string id)
     {
