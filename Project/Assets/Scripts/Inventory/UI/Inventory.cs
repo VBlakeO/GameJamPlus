@@ -19,7 +19,7 @@ namespace UI
         [Space]
         Dictionary<string, Plant> _plantsUI;
         [SerializeField] List<(string, int)> startPlants;
-        Dictionary<string, int> plants;
+        Dictionary<string, int> plants = new Dictionary<string, int>();
         [Space]
         [SerializeField] string _selected;
         public string selected => _selected;

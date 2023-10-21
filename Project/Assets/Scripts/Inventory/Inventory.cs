@@ -5,7 +5,7 @@ using UnityEngine;
 public class Inventory : Singleton<Inventory>
 {
     [SerializeField] int maxQuantity = 99;
-    [SerializeField] Dictionary<string, int> plants; //<id, quantity>
+    [SerializeField] Dictionary<string, int> plants = new Dictionary<string, int>(); //<id, quantity>
     public Action<string, int> onPlantQuantityChanged;
 
     public int AddPlant(string id, int quantity)
