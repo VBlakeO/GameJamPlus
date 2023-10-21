@@ -1,13 +1,12 @@
 using System;
 using System.Collections.Generic;
-using System.Runtime.ConstrainedExecution;
 using UnityEngine;
 using Newtonsoft.Json;
-
+using System.IO;
 
 public class Inventory : Singleton<Inventory>, IPersistent
 {
-    [SerializeField] string _persistentPath = "/Inventory";
+    string _persistentPath = "/Inventory.json";
 
     [SerializeField] int maxQuantity = 99;
      Dictionary<string, int> plants => data.plants; //<id, quantity>
@@ -151,12 +150,15 @@ public class Inventory : Singleton<Inventory>, IPersistent
 
     void IPersistent.LoadFromJson(string persistentDataPath)
     {
-        _data = JsonConvert.DeserializeObject<Data>(System.IO.File.ReadAllText(persistentDataPath + _persistentPath + ".json"));
+        if (!File.Exists(persistentDataPath + _persistentPath))
+            return;
+
+        _data = JsonConvert.DeserializeObject<Data>(File.ReadAllText(persistentDataPath + _persistentPath));
     }
 
     void IPersistent.SaveAsJson(string persistentDataPath)
     {
-        System.IO.File.WriteAllText(persistentDataPath + _persistentPath + ".json", JsonConvert.SerializeObject(_data));
+        File.WriteAllText(persistentDataPath + _persistentPath + ".json", JsonConvert.SerializeObject(_data));
     }
 
     [Serializable]
