@@ -22,6 +22,7 @@ namespace UI
         Dictionary<string, int> plants;
         [Space]
         [SerializeField] string _selected;
+        public string selected => _selected;
         public string currentPlant => _selected;
         public Action<string> onSelectedChanged;
 
