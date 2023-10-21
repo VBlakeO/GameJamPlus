@@ -8,7 +8,7 @@ public class Inventory : Singleton<Inventory>, IPersistent
 {
     string _persistentPath = "/Inventory";
 
-    [SerializeField] int maxQuantity = 99;
+    public int maxQuantity => data.maxQuantity;
     public Dictionary<string, int> plants => data.plants; //<id, quantity>
 
     [SerializeField] Data _data = new Data();
@@ -173,7 +173,8 @@ public class Inventory : Singleton<Inventory>, IPersistent
     [Serializable]
     public class Data
     {
-        public Dictionary<string, int> plants = new Dictionary<string, int>(); //<id, quantity>
+        public int maxQuantity = 99;
 
+        public Dictionary<string, int> plants = new Dictionary<string, int>(); //<id, quantity>
     }
 }
