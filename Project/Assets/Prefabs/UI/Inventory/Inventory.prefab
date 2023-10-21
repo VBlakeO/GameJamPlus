@@ -289,8 +289,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _isOpen: 0
-  tweenTransform: {fileID: 635484422621705213}
-  _tweenStartPositionY: 0
+  _tweenTransform: {fileID: 635484422621705213}
   _tweenTargetPositionY: 0
   _tweenDuration: 0.5
   _itemsContent: {fileID: 4066665967789429375}
