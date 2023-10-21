@@ -5,7 +5,7 @@ using UnityEngine;
 using Newtonsoft.Json;
 
 
-public class Inventory : Singleton<Inventory>
+public class Inventory : Singleton<Inventory>, IPersistent
 {
     [SerializeField] string _persistentPath = "/Inventory";
 
@@ -18,15 +18,24 @@ public class Inventory : Singleton<Inventory>
     public Action<string, int> onPlantQuantityChanged;
     public Action<string> onPlantTakeFailed;
 
+
     protected override void Awake()
     {
         base.Awake();
 
-        Persistent.Instance.onSave += SaveAsJson;
-        Persistent.Instance.onLoad += LoadFromJson;
+        ((IPersistent)this).Subscribe();
     }
 
-
+    void IPersistent.Subscribe()
+    {
+        Persistent.Instance.onSave += ((IPersistent)this).SaveAsJson;
+        Persistent.Instance.onLoad += ((IPersistent)this).LoadFromJson;
+    }
+    void IPersistent.Unsubscribe()
+    {
+        Persistent.Instance.onSave -= ((IPersistent)this).SaveAsJson;
+        Persistent.Instance.onLoad -= ((IPersistent)this).LoadFromJson;
+    }
 
     public int AddPlant(string id, int quantity)
     {
@@ -140,13 +149,12 @@ public class Inventory : Singleton<Inventory>
         return false;
     }
 
-
-    public void LoadFromJson(string persistentDataPath)
+    void IPersistent.LoadFromJson(string persistentDataPath)
     {
         _data = JsonConvert.DeserializeObject<Data>(System.IO.File.ReadAllText(persistentDataPath + _persistentPath + ".json"));
     }
 
-    public void SaveAsJson(string persistentDataPath)
+    void IPersistent.SaveAsJson(string persistentDataPath)
     {
         System.IO.File.WriteAllText(persistentDataPath + _persistentPath + ".json", JsonConvert.SerializeObject(_data));
     }
