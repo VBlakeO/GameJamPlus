@@ -4,6 +4,7 @@ using UnityEngine;
 public class Persistent : Singleton<Persistent>
 {
     string _persistentDataPath;
+    public string persistentDataPath => _persistentDataPath;
 
     public Action<string> onSave; //string path
     public Action<string> onLoad; //string path
