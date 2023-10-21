@@ -8,4 +8,12 @@ public class Plant
     public Sprite icon => _static.icon;
 
     PlantStatic _static;
+
+
+    public Plant(string id)
+    {
+        _static = PlantStaticsHolder.Instance.Get(id);
+
+        //...
+    }
 }
