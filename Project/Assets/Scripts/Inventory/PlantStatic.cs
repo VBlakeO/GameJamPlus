@@ -7,4 +7,5 @@ public class PlantStatic : ScriptableObject
     public string id;
     public new string name;
     public Sprite icon;
+    public GameObject[] plantStateObjects; 
 }

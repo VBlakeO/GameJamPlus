@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class Player_Interaction : MonoBehaviour
+public class PlayerInteraction : MonoBehaviour
 {
     [SerializeField] private float range = 3;
     [SerializeField] private LayerMask layer = 3;
@@ -24,7 +24,7 @@ public class Player_Interaction : MonoBehaviour
 
             if (Physics.Raycast(transform.position, transform.forward, out RaycastHit hit, range, layer, QueryTriggerInteraction.Ignore))
             {
-                if (hit.transform.TryGetComponent<I_Interact>(out var obj))
+                if (hit.transform.TryGetComponent<IInteract>(out var obj))
                 {
                     obj.Interact();
                 }

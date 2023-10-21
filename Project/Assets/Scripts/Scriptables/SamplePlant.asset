@@ -15,3 +15,7 @@ MonoBehaviour:
   id: samplePlant
   name: Sample Plant
   icon: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
+  plantStateObjects:
+  - {fileID: 6459165931017094557, guid: dc722166b3cde6f48b5cd559e7b1881c, type: 3}
+  - {fileID: 7257587143560107405, guid: e17e83082fd0e96448df0ae3cf5dde6e, type: 3}
+  - {fileID: 2459279982306136577, guid: 2b3cd46a2f8fc9b4ab7a2fb47296c634, type: 3}
