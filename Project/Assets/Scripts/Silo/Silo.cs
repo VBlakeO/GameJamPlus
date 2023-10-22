@@ -22,7 +22,6 @@ public class Silo : MonoBehaviour
         SilosManager.Instance.Add(this);
 
         siloContentTransform.localScale = new Vector3(1, quantity / maxQuantity, 1);
-        onQuantityChanged += (quantity) => siloContentTransform.localScale = new Vector3(1, quantity / maxQuantity, 1);
     }
 
     public void ResetPlant()
@@ -57,6 +56,7 @@ public class Silo : MonoBehaviour
             return;
 
         data.quantity = quantity;
+        siloContentTransform.localScale = new Vector3(1, quantity / maxQuantity, 1);
 
         if (onQuantityChanged != null)
             onQuantityChanged.Invoke(quantity);
@@ -72,6 +72,7 @@ public class Silo : MonoBehaviour
         int futureQuantity = Mathf.Clamp(previousQuantity + quantity, 0, maxQuantity);
 
         data.quantity = futureQuantity;
+        siloContentTransform.localScale = new Vector3(1, data.quantity / maxQuantity, 1);
 
         if (onQuantityChanged != null)
             onQuantityChanged.Invoke(quantity);
@@ -93,6 +94,7 @@ public class Silo : MonoBehaviour
         int futureQuantity = Mathf.Clamp(previousQuantity - quantity, 0, maxQuantity);
 
         data.quantity = futureQuantity;
+        siloContentTransform.localScale = new Vector3(1, data.quantity / maxQuantity, 1);
 
         if (onQuantityChanged != null)
             onQuantityChanged.Invoke(quantity);
