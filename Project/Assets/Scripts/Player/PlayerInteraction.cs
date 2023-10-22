@@ -17,6 +17,9 @@ public class PlayerInteraction : MonoBehaviour
 
     void Update()
     {
+        bool target = Physics.Raycast(transform.position, transform.forward, out RaycastHit _hit, range, layer, QueryTriggerInteraction.Ignore) && CanInteract();
+        HudManager.Instance.ActiveAimCircule(target);
+
         if (Input.GetKeyDown(KeyCode.E))
         {
             if (!CanInteract())
