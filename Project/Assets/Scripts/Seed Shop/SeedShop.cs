@@ -34,6 +34,8 @@ public class SeedShop : Singleton<SeedShop>
 
     public void Buy(string id, int quantity)
     {
+        Debug.Log("Trying to buy " + id + " " + quantity + ". Lets see...");
+
         if (!PlantStaticsHolder.Instance.plantStatics.ContainsKey(id))
         {
             Debug.Log("Trying to buy an unknown plant (" + id  + "). Aborting action...");

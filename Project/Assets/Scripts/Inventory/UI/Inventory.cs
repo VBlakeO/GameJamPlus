@@ -43,14 +43,12 @@ namespace UI
         void Start()
         {
             InstantiatePlantsUI();
-
             UpdatePlantsQuantity(global::Inventory.Instance.plants);
+            SelectFirstAvailable();
 
             global::Inventory.Instance.onInventoryChanged += (data) => UpdatePlantsQuantity(data.plants);
             global::Inventory.Instance.onPlantQuantityChanged += (id, value) => UpdatePlantQuantity(id, value);
             global::Inventory.Instance.onPlantTakeFailed += (id) => selectedDisplay.GetComponent<RectTransform>().DOShakePosition(.5f, 5);
-
-            SelectFirstAvailable();
         }
 
         void Update()
@@ -94,6 +92,12 @@ namespace UI
         }
         void UpdatePlantQuantity(string id, int quantity)
         {
+            if (!PlantStaticsHolder.Instance.plantStatics.ContainsKey(id))
+            {
+                Debug.Log("Trying to update a non-existing plant. Aborting...");
+                return;
+            }
+
             _plantsUI[id].quantity.text = quantity.ToString();
             _plantsUI[id].gameObject.SetActive(quantity > 0);
 
