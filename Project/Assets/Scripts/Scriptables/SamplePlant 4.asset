@@ -15,7 +15,11 @@ MonoBehaviour:
   id: samplePlant4
   name: Sample Plant4
   icon: {fileID: 10915, guid: 0000000000000000f000000000000000, type: 0}
+  buyPrice: 1
+  sellPrice: 3
+  description: plant description
   budStateDuration: 1
   foliageStateDuration: 1
   rootStateDuration: 1
+  consumptionSpeed: 1
   plantStateObjects: []
