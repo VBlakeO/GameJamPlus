@@ -7,6 +7,7 @@ public class PlantStatic : ScriptableObject
     public string id;
     public new string name;
     public Sprite icon;
+    public int price = 1;
 
     [Header("StatesDuration")]
     public float budStateDuration = 1f;
