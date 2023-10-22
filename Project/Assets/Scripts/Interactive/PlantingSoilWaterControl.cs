@@ -64,8 +64,6 @@ public class PlantingSoilWaterControl : MonoBehaviour, IInteract
 
             _remainingTimeToDry = _dryingTimeLimit;
         }
-
-        print(_currentWaterAmount);
     }
 
     private void FixedUpdate() 

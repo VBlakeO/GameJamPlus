@@ -33,35 +33,33 @@ public class PlantGreenhouse : MonoBehaviour
         int _seedsAvailable = Inventory.Instance.TakePlant(UI.Inventory.Instance.selected, plantingSoils.Count);
         lastPlantationId = UI.Inventory.Instance.selected;
 
-        if (_seedsAvailable != 0)
-        {
-            for (int i = 0; i < plantingSoils.Count; i++)
-            {
-                if(i <= _seedsAvailable)
-                {
-                    plantingSoils[i].Interact();
-                    _seedsPlanted++;
-                }
-            }
+        if (_seedsAvailable == 0)
+            return;
 
-            OnFertilize?.Invoke();
-            ChangeButton(1);
+        for (int i = 0; i < plantingSoils.Count; i++)
+        {
+            if (i < _seedsAvailable)
+            {
+                plantingSoils[i].Interact();
+                _seedsPlanted++;
+            }
         }
+
+        OnFertilize?.Invoke();
+        ChangeButton(1);
     }
 
     public void HarvestPlantingSoils()
     {
+        if (plantingSoils[0].plant.PlantState == PlantState.ROOT)
+            SilosManager.Instance.AddPlant(lastPlantationId, _seedsPlanted);
+
         foreach (var item in plantingSoils)
         {
             if (item.fertilizedLand)
-            {
-                if (item.plant.PlantState == PlantState.ROOT)
-                    SilosManager.Instance.AddPlant(lastPlantationId, _seedsPlanted);
-
                 item.Interact();
-            }
         }
-    	
+
         OnHarvest?.Invoke();
         _seedsPlanted = 0;
         ChangeButton(0);

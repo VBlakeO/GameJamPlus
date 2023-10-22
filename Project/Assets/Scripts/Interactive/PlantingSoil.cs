@@ -151,12 +151,14 @@ public class PlantingSoil : MonoBehaviour, IInteract
   
     public void ActiveLostState()
     {
-        plant.PlantState = PlantState.LOST;
+        if(plant != null)
+            plant.PlantState = PlantState.LOST;
         SetDryColor();
     }
 
     private void SetDryColor()
     {
-        currentPlantObj.GetComponent<ArrayColorSetGroup>().SetNewColor();
+        if (currentPlantObj)
+            currentPlantObj.GetComponent<ArrayColorSetGroup>().SetNewColor();
     }
 }
