@@ -1,21 +1,26 @@
+using UnityEngine.UI;
 using UnityEngine;
 
 public class PlantingSoilWaterControl : MonoBehaviour, IInteract
 {
     [SerializeField] private float _dryingTimeLimit = 1f;
     [SerializeField] private PlantGreenhouse plantGreenhouse = null;
+    [SerializeField] private Image waterFill = null;
 
     private float _reservatoryCapacity = 2f;
-    public float _currentWaterAmount = 0f;
-    public float _remainingTimeToDry = 0f;
+    private float _currentWaterAmount = 0f;
+    private float _remainingTimeToDry = 0f;
 
-    private void Start() 
+    private void Start()
     {
         _reservatoryCapacity = plantGreenhouse.plantingSoils.Count;
         _remainingTimeToDry = _dryingTimeLimit;
 
-        if(plantGreenhouse)
+        if (plantGreenhouse)
             plantGreenhouse.OnHarvest += DryWater;
+
+        if (waterFill)
+            waterFill.fillAmount = GetWaterPercentage();
     }
 
     public void Interact()
@@ -78,6 +83,9 @@ public class PlantingSoilWaterControl : MonoBehaviour, IInteract
                 _remainingTimeToDry = Mathf.Clamp(_remainingTimeToDry - Time.deltaTime * dryingRate, 0f, _reservatoryCapacity);
             else
                 DryPlants();
+            
+            if(waterFill)
+                waterFill.fillAmount = GetWaterPercentage();
         }
 
     }
@@ -93,13 +101,15 @@ public class PlantingSoilWaterControl : MonoBehaviour, IInteract
 
     public float GetWaterPercentage()
     {
-        return _currentWaterAmount / _reservatoryCapacity * 100;
+        return _currentWaterAmount / _reservatoryCapacity * 1f;
     }
 
     private void DryWater()
     {
         _currentWaterAmount = 0f;
         _remainingTimeToDry = _dryingTimeLimit;
-        print("DryWater " + _currentWaterAmount);
+        
+        if (waterFill)
+            waterFill.fillAmount = GetWaterPercentage();
     }
 }

@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using UnityEngine.Events;
 
 public enum PlantState { NONE = 0, BUD = 1, FOLIAGE = 2, ROOT = 3, LOST = 4}
 public class PlantingSoil : MonoBehaviour, IInteract
@@ -9,10 +10,16 @@ public class PlantingSoil : MonoBehaviour, IInteract
     public bool fertilizedLand => plant != null;
     private string currentId = null;
 
+    public Action OnReadyToHarvest = null;
+    public Action OnLostHarvest = null;
+
     [SerializeField] private MeshRenderer meshRenderer;
 
 
-public PlantState t_plantState = PlantState.NONE;
+    public PlantState t_plantState = PlantState.NONE;
+
+    private bool _readyToHarvest = false;
+
 
     public void Interact()
     {
@@ -107,6 +114,12 @@ public PlantState t_plantState = PlantState.NONE;
             }
             else
             {
+                if (plant.PlantState != PlantState.ROOT)
+                {
+                    if (_readyToHarvest)
+                        _readyToHarvest = false;
+                }
+
                 if (plant.PlantState != PlantState.LOST)
                 {
                     plant.currentTime = 0f;
@@ -128,6 +141,12 @@ public PlantState t_plantState = PlantState.NONE;
         currentPlantObj.SetActive(false);
         currentPlantObj = PoolingManager.Instance.plants[currentId][(int)plant.PlantState - 1].Pool.Get();
         currentPlantObj.transform.position = transform.position;
+
+        if (plant.PlantState == PlantState.ROOT)
+            OnReadyToHarvest?.Invoke();        
+        
+        if (plant.PlantState == PlantState.LOST)
+            OnLostHarvest?.Invoke();
     }
   
     public void ActiveLostState()
