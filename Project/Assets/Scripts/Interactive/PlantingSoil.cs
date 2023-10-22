@@ -7,10 +7,9 @@ public class PlantingSoil : MonoBehaviour, IInteract
     public Plant plant = null;
     public GameObject currentPlantObj = null;
     public bool fertilizedLand => plant != null;
-    public Color lostPlantColor = new();
-
-    private Color[] previousColors = null;
     private string currentId = null;
+
+    [SerializeField] private MeshRenderer meshRenderer;
 
 
 public PlantState t_plantState = PlantState.NONE;
@@ -39,6 +38,7 @@ public PlantState t_plantState = PlantState.NONE;
 
         currentPlantObj = PoolingManager.Instance.plants[id][0].Pool.Get();
         currentPlantObj.transform.position = transform.position;
+        meshRenderer.enabled = false;
     }
 
     public void Harvest()
@@ -59,6 +59,7 @@ public PlantState t_plantState = PlantState.NONE;
             DestroyEffect();
         }
 
+        meshRenderer.enabled = true;
         currentPlantObj.SetActive(false);
         currentPlantObj = null;
         currentId = "";

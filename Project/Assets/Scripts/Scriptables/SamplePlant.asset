@@ -21,7 +21,7 @@ MonoBehaviour:
   rootStateDuration: 5
   consumptionSpeed: 0.04
   plantStateObjects:
-  - {fileID: 1999863626713616527, guid: ac4a2043d19eb844782d747752511136, type: 3}
-  - {fileID: 484155506775974310, guid: 75ca11367461d244b86abfa37b9d7b68, type: 3}
-  - {fileID: 8219614331036301262, guid: a7d42bf1fb364254e9a54198054b90be, type: 3}
-  - {fileID: 3155957846182050074, guid: 4c9093ac14f466249b66e79c17cbec3d, type: 3}
+  - {fileID: 4859309175497144659, guid: 72ad3e02ce5c60141b397faaa401d703, type: 3}
+  - {fileID: 7890945097366725502, guid: f68932b7a023dd34889445a060fdbaac, type: 3}
+  - {fileID: 7758998762555182146, guid: ff60146c7e9d8b3478aba94554071844, type: 3}
+  - {fileID: 3105616582982513042, guid: fdf967e218faa064482948f56b11de7c, type: 3}
