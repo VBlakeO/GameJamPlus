@@ -11,6 +11,7 @@ namespace UI
 
         void Start()
         {
+            currencyText.text = "$ " + global::PlayerCurrency.Instance.amount.ToString();
             global::PlayerCurrency.Instance.onAmountChanged += (quantity) => currencyText.text = "$ " + quantity.ToString();
         }
     }
