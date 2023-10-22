@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 
-public class Silo : Singleton<Silo>
+public class Silo : MonoBehaviour
 {
     public int maxQuantity => data.maxQuantity;
     public string id => data.id;
@@ -11,6 +11,8 @@ public class Silo : Singleton<Silo>
     [SerializeField] Data _data = new Data();
     public Data data => _data;
 
+    [SerializeField] Transform siloContentTransform;
+
     public Action<string> onIdChanged;
     public Action<int> onQuantityChanged;
 
@@ -18,6 +20,9 @@ public class Silo : Singleton<Silo>
     void Start()
     {
         SilosManager.Instance.Add(this);
+
+        siloContentTransform.localScale = new Vector3(1, quantity / maxQuantity, 1);
+        onQuantityChanged += (quantity) => siloContentTransform.localScale = new Vector3(1, quantity / maxQuantity, 1);
     }
     void OnDestroy()
     {
