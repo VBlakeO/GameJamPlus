@@ -3,7 +3,7 @@
 public class RendererMaterialArrayColorSet : MonoBehaviour
 {
     public string property = "_BaseColor";
-    public Color[] colors = new Color[1];
+    public Color[] colors = { Color.white };
 
 
     private void OnValidate()
