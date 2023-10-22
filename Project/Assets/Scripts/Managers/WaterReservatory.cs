@@ -28,8 +28,6 @@ public class WaterReservatory : Singleton<WaterReservatory>
 
         if (onAmountChanged != null)
             onAmountChanged.Invoke(_currentWaterAmount);
-
-        print(GetWaterPercentage() + " water percentage");
     }
 
     public float CheckWaterAmount()
