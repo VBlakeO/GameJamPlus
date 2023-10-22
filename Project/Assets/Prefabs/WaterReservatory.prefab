@@ -60,6 +60,7 @@ GameObject:
   - component: {fileID: 3600762502064342680}
   - component: {fileID: 1018179275525468763}
   - component: {fileID: 3518799078344102411}
+  - component: {fileID: 4559108807391740665}
   m_Layer: 0
   m_Name: Tank
   m_TagString: Untagged
@@ -155,6 +156,20 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &4559108807391740665
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9070358354119808263}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 539789e6d1cf84651aac0519731f2fe8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  waterTankLevel: {fileID: 6937858523236252100}
+  _waterTankTweenDuration: 0.5
 --- !u!1001 &7476680086613450287
 PrefabInstance:
   m_ObjectHideFlags: 0
