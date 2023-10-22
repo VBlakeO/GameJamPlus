@@ -1,18 +1,13 @@
 using System;
-using System.Collections.Generic;
 using UnityEngine;
-using Newtonsoft.Json;
-using System.IO;
 
-public class Silo : Singleton<Silo>, IPersistent
+public class Silo : Singleton<Silo>
 {
-    string _persistentPath = "/Silo";
-
     public int maxQuantity => data.maxQuantity;
     public string id => data.id;
     public int quantity => data.quantity;
+    public int emptyQuantity => maxQuantity - quantity;
 
-    
     [SerializeField] Data _data = new Data();
     public Data data => _data;
 
@@ -20,22 +15,13 @@ public class Silo : Singleton<Silo>, IPersistent
     public Action<int> onQuantityChanged;
 
 
-    protected override void Awake()
+    void Start()
     {
-        base.Awake();
-
-        ((IPersistent)this).Subscribe();
+        SilosManager.Instance.Add(this);
     }
-
-    void IPersistent.Subscribe()
+    void OnDestroy()
     {
-        Persistent.Instance.onSave += ((IPersistent)this).SaveAsJson;
-        Persistent.Instance.onLoad += ((IPersistent)this).LoadFromJson;
-    }
-    void IPersistent.Unsubscribe()
-    {
-        Persistent.Instance.onSave -= ((IPersistent)this).SaveAsJson;
-        Persistent.Instance.onLoad -= ((IPersistent)this).LoadFromJson;
+        SilosManager.Instance.Remove(this);
     }
 
     public void ResetPlant()
@@ -112,32 +98,6 @@ public class Silo : Singleton<Silo>, IPersistent
 
         return previousQuantity - futureQuantity;
     }
-
-    bool IPersistent.HasJsonSave(string persistentDataPath)
-    {
-        return File.Exists(persistentDataPath + _persistentPath);
-    }
-    void IPersistent.SaveAsJson(string persistentDataPath)
-    {
-        File.WriteAllText(persistentDataPath + _persistentPath, JsonConvert.SerializeObject(_data, Formatting.Indented));
-    }
-    void IPersistent.LoadFromJson(string persistentDataPath)
-    {
-        if (!((IPersistent)this).HasJsonSave(persistentDataPath))
-        {
-            ((IPersistent)this).SaveAsJson(persistentDataPath);
-            return;
-        }
-
-        _data = JsonConvert.DeserializeObject<Data>(File.ReadAllText(persistentDataPath + _persistentPath));
-
-        if (onIdChanged != null)
-            onIdChanged.Invoke(data.id);
-
-        if (onQuantityChanged != null)
-            onQuantityChanged.Invoke(data.quantity);
-    }
-
 
     [Serializable]
     public class Data
