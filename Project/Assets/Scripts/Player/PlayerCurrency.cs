@@ -38,14 +38,14 @@ public class PlayerCurrency : Singleton<PlayerCurrency>, IPersistent
         data.amount += quantity;
 
         if (onAmountChanged != null)
-            onAmountChanged.Invoke(quantity);
+            onAmountChanged.Invoke(data.amount);
     }
     public void Remove(int quantity)
     {
         data.amount -= quantity;
 
         if (onAmountChanged != null)
-            onAmountChanged.Invoke(quantity);
+            onAmountChanged.Invoke(data.amount);
     }
 
     bool IPersistent.HasJsonSave(string persistentDataPath)

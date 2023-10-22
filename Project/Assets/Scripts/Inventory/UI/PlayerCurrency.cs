@@ -3,9 +3,10 @@ using TMPro;
 
 namespace UI
 {
-    public class PlayerCurrency : MonoBehaviour
+    public class PlayerCurrency : Singleton<PlayerCurrency>
     {
-        [SerializeField] TextMeshProUGUI currencyText;
+        [SerializeField] TextMeshProUGUI _currencyText;
+        public TextMeshProUGUI currencyText => _currencyText;
 
 
         void Start()

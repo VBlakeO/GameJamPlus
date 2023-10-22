@@ -48,7 +48,7 @@ public class Buyer : Singleton<Buyer>
 
     public void Buy(Silo silo)
     {
-        int siloPrice = PlantStaticsHolder.Instance.plantStatics[silo.id].price * silo.quantity;
+        int siloPrice = PlantStaticsHolder.Instance.plantStatics[silo.id].sellPrice * silo.quantity;
         silo.ResetPlant();
         PlayerCurrency.Instance.Add(siloPrice);
     }
