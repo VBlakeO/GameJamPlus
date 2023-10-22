@@ -24,10 +24,6 @@ public class Silo : MonoBehaviour
         siloContentTransform.localScale = new Vector3(1, quantity / maxQuantity, 1);
         onQuantityChanged += (quantity) => siloContentTransform.localScale = new Vector3(1, quantity / maxQuantity, 1);
     }
-    void OnDestroy()
-    {
-        SilosManager.Instance.Remove(this);
-    }
 
     public void ResetPlant()
     {
