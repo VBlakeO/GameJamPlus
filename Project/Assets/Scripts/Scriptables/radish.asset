@@ -10,14 +10,14 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f8b50102f2e73481f808fc3bceafa5e1, type: 3}
-  m_Name: SamplePlant 1
+  m_Name: radish
   m_EditorClassIdentifier: 
-  id: samplePlant1
-  name: Sample Plant1
-  icon: {fileID: 10915, guid: 0000000000000000f000000000000000, type: 0}
+  id: radish
+  name: Radish
+  icon: {fileID: 21300000, guid: 3d743c0d3687049c68aa9d3ae10e1474, type: 3}
   buyPrice: 1
   sellPrice: 3
-  description: plant description
+  description: Crunchy, pungent root vegetable used in salads and cooking worldwide.
   budStateDuration: 1
   foliageStateDuration: 1
   rootStateDuration: 1
