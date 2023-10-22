@@ -9,6 +9,7 @@ public class PlantStatic : ScriptableObject
     public Sprite icon;
     public int buyPrice = 1;
     public int sellPrice = 3;
+    public string description = "plant description";
 
     [Header("StatesDuration")]
     public float budStateDuration = 1f;

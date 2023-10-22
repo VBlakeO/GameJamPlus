@@ -48,7 +48,7 @@ namespace UI
 
             global::Inventory.Instance.onInventoryChanged += (data) => UpdatePlantsQuantity(data.plants);
             global::Inventory.Instance.onPlantQuantityChanged += (id, value) => UpdatePlantQuantity(id, value);
-            global::Inventory.Instance.onPlantTakeFailed += (id) => selectedDisplay.GetComponent<RectTransform>().DOShakePosition(.5f, 3);
+            global::Inventory.Instance.onPlantTakeFailed += (id) => selectedDisplay.GetComponent<RectTransform>().DOShakePosition(.5f, 5);
 
             SelectFirstAvailable();
         }

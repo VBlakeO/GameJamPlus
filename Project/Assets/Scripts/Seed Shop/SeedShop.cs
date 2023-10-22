@@ -1,11 +1,35 @@
 using DG.Tweening;
+using UI;
 using UnityEngine;
 
 public class SeedShop : Singleton<SeedShop>
 {
+    [SerializeField] SeedPanel[] panels;
+
     protected override void Awake()
     {
         base.Awake();
+
+        if (panels.Length != PlantStaticsHolder.Instance.plantStatics.Count)
+        {
+            Debug.LogError("The amount of plants and the amount of seed panels are different");
+        }
+    }
+
+    void Start()
+    {
+        InitPanels();
+    }
+
+    void InitPanels()
+    {
+        int i = 0;
+
+        foreach (PlantStatic plantStatic in PlantStaticsHolder.Instance.plantStatics.Values)
+        {
+            panels[i].Set(plantStatic.id);
+            i++;
+        }
     }
 
     public void Buy(string id, int quantity)
@@ -29,7 +53,7 @@ public class SeedShop : Singleton<SeedShop>
         if (playerCurrency.amount < buyPrice)
         {
             Debug.Log("Player doesnt have enough currency ($) to buy " +  quantity + " " + id + ". Aborting action...");
-           UI.PlayerCurrency.Instance.currencyText.rectTransform.DOShakePosition(.5f, 5);
+           UI.PlayerCurrency.Instance.currencyText.rectTransform.DOShakePosition(.5f, 8);
             return;
         }
 
