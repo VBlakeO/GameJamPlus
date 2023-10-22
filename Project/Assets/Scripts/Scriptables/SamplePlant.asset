@@ -15,10 +15,13 @@ MonoBehaviour:
   id: samplePlant
   name: Sample Plant
   icon: {fileID: 10915, guid: 0000000000000000f000000000000000, type: 0}
+  price: 1
   budStateDuration: 3
   foliageStateDuration: 2
   rootStateDuration: 5
+  consumptionSpeed: 0.04
   plantStateObjects:
-  - {fileID: 6459165931017094557, guid: dc722166b3cde6f48b5cd559e7b1881c, type: 3}
-  - {fileID: 7257587143560107405, guid: e17e83082fd0e96448df0ae3cf5dde6e, type: 3}
-  - {fileID: 2459279982306136577, guid: 2b3cd46a2f8fc9b4ab7a2fb47296c634, type: 3}
+  - {fileID: 1999863626713616527, guid: ac4a2043d19eb844782d747752511136, type: 3}
+  - {fileID: 484155506775974310, guid: 75ca11367461d244b86abfa37b9d7b68, type: 3}
+  - {fileID: 8219614331036301262, guid: a7d42bf1fb364254e9a54198054b90be, type: 3}
+  - {fileID: 3155957846182050074, guid: 4c9093ac14f466249b66e79c17cbec3d, type: 3}

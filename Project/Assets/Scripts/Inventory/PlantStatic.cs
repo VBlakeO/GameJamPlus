@@ -15,5 +15,8 @@ public class PlantStatic : ScriptableObject
     public float rootStateDuration = 1f;
     [Space]
 
+    [Header("ConsumptionSpeed")]
+    public float consumptionSpeed = 1f;
+
     public GameObject[] plantStateObjects; 
 }

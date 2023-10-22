@@ -1,17 +1,20 @@
 using System;
 using UnityEngine;
 
-public enum PlantState {NONE = 0, BUD = 1, FOLIAGE = 2, ROOT = 3}
+public enum PlantState { NONE = 0, BUD = 1, FOLIAGE = 2, ROOT = 3, LOST = 4}
 public class PlantingSoil : MonoBehaviour, IInteract
-{   
+{
     public Plant plant = null;
-    public float t_currentTime;
-    public PlantState t_currentState;
     public GameObject currentPlantObj = null;
+    public bool fertilizedLand => plant != null;
+    public Color lostPlantColor = new();
 
+    private Color[] previousColors = null;
     private string currentId = null;
-    private bool fertilizedLand => plant != null;
-    
+
+
+public PlantState t_plantState = PlantState.NONE;
+
     public void Interact()
     {
         if (!fertilizedLand)
@@ -28,11 +31,62 @@ public class PlantingSoil : MonoBehaviour, IInteract
             return PlantState.NONE;
     }
 
+    public void Fertilize(string id)
+    {
+        plant = new Plant(id);
+        currentId = id;
+        plant.PlantState = PlantState.BUD;
+
+        currentPlantObj = PoolingManager.Instance.plants[id][0].Pool.Get();
+        currentPlantObj.transform.position = transform.position;
+    }
+
+    public void Harvest()
+    {
+        if (!currentPlantObj)
+            return;
+
+        if (plant.PlantState != PlantState.ROOT && plant.PlantState != PlantState.LOST)
+            return;
+
+        if (plant.PlantState == PlantState.ROOT)
+        {
+            HarvestEffect();
+        }
+
+        if (plant.PlantState == PlantState.LOST)
+        {
+            DestroyEffect();
+        }
+
+        currentPlantObj.SetActive(false);
+        currentPlantObj = null;
+        currentId = "";
+        plant = null;
+    }
+
+    private void HarvestEffect()
+    {
+
+    }
+
+    private void DestroyEffect()
+    {
+
+    }
+
+    
+
     void FixedUpdate()
     {
         if (!fertilizedLand)
             return;
 
+        UpdatePlanteState();
+    }
+
+    private void UpdatePlanteState()
+    {
         if ((int)plant.PlantState < Enum.GetNames(typeof(PlantState)).Length)
         {
             float currentStateDuration = plant.PlantState switch
@@ -52,50 +106,37 @@ public class PlantingSoil : MonoBehaviour, IInteract
             }
             else
             {
-                if (plant.PlantState != PlantState.ROOT)
+                if (plant.PlantState != PlantState.LOST)
                 {
                     plant.currentTime = 0f;
                     plant.PlantState++;
                     ChangePlantObject();
                 }
+                else
+                {
+                    SetDryColor();
+                }
+
+                t_plantState = plant.PlantState;
             }
         }
-
-        t_currentTime = plant.currentTime;
-        t_currentState = plant.PlantState;
     }
 
     private void ChangePlantObject()
     {
         currentPlantObj.SetActive(false);
-        currentPlantObj = PoolingManager.Instance.plants[currentId][(int)plant.PlantState-1].Pool.Get();
+        currentPlantObj = PoolingManager.Instance.plants[currentId][(int)plant.PlantState - 1].Pool.Get();
         currentPlantObj.transform.position = transform.position;
     }
-
-    public void Fertilize(string id)
+  
+    public void ActiveLostState()
     {
-        plant = new Plant(id);
-        currentId = id;
-        plant.PlantState = PlantState.BUD;
-
-        currentPlantObj = PoolingManager.Instance.plants[id][0].Pool.Get();
-        currentPlantObj.transform.position = transform.position;
-
-        print("Fertilize");
+        plant.PlantState = PlantState.LOST;
+        SetDryColor();
     }
 
-    public void Harvest()
-    {   
-        if(!currentPlantObj || plant.PlantState != PlantState.ROOT)
-        return;
-
-        currentPlantObj.SetActive(false);
-        currentPlantObj = null;
-        currentId = "";
-        plant = null;
-
-        print("Harvest");
+    private void SetDryColor()
+    {
+        currentPlantObj.GetComponent<ArrayColorSetGroup>().SetNewColor();
     }
-
-    // folhagem seca e raiz apodrece
 }

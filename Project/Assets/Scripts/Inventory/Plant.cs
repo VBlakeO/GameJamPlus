@@ -12,6 +12,8 @@ public class Plant
     public float foliageStateDuration => _static.foliageStateDuration;
     public float rootStateDuration => _static.rootStateDuration;
 
+    public float consumptionSpeed => _static.consumptionSpeed;
+
     public GameObject[] plantStateObjects => _static.plantStateObjects;
     private PlantStatic _static;
 

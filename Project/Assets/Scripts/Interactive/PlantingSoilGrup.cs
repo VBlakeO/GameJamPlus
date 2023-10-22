@@ -1,33 +1,18 @@
-using System.Collections.Generic;
 using UnityEngine;
 
 public class PlantingSoilGrup : MonoBehaviour, IInteract
 {
-    public List<PlantingSoil> plantingSoils = null;
-
-
-    private void Awake() {
-
-        foreach (var item in GetComponentsInChildren<PlantingSoil>())
-            plantingSoils.Add(item);
-    }
+    [SerializeField] private PlantGreenhouse plantGreenhouse = null;
 
     public void Interact()
     {
-        int _seedsAvailable = Inventory.Instance.TakePlant(UI.Inventory.Instance.selected, plantingSoils.Count);
-        
-        if (_seedsAvailable == 0)
-            return;
-
-        if (_seedsAvailable < plantingSoils.Count)
+        if (!plantGreenhouse.PlantGreenhouseFertilized())
         {
-            for (int i = 0; i < _seedsAvailable; i++)
-                plantingSoils[i].Interact();
+            plantGreenhouse.FertilizePlantingSoils();
         }
         else
         {
-            foreach (var item in plantingSoils)
-                item.Interact();
+            plantGreenhouse.HarvestPlantingSoils();
         }
     }
 }
