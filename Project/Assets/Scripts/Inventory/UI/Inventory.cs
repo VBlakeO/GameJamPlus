@@ -134,10 +134,14 @@ namespace UI
         public void Show()
         {
             _tweenTransform.DOAnchorPos3DY(_tweenTargetPositionY, _tweenDuration);
+            Cursor.visible = true;
+            Cursor.lockState = CursorLockMode.None;
         }
         public void Hide()
         {
             _tweenTransform.DOAnchorPos3DY(_tweenStartPositionY, _tweenDuration);
+            Cursor.visible = false;
+            Cursor.lockState = CursorLockMode.Locked;
         }
 
         public void Select(string id)

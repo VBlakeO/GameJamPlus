@@ -702,7 +702,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8be03bdf08a12464baae5e51bf94f57b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _dryingTimeLimit: 0.2
+  _dryingTimeLimit: 0.4
   plantGreenhouse: {fileID: 6831272633845306262}
   waterFill: {fileID: 6201630456474479899}
 --- !u!1001 &1103660407717456232
