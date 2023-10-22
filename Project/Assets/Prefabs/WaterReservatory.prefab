@@ -47,6 +47,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _reservatoryCapacity: 100
   _currentWaterAmount: 2.5
+  waterTankLevel: {fileID: 6937858523236252100}
+  _waterTankTweenDuration: 0.5
 --- !u!1 &9070358354119808263
 GameObject:
   m_ObjectHideFlags: 0
