@@ -11,6 +11,6 @@ public class WaterTank : Singleton<WaterTank>
         WaterReservatory waterReservatory = WaterReservatory.Instance;
 
         waterTankLevel.localScale = new Vector3(1, waterReservatory.GetWaterPercentage()/100, 1);
-        waterReservatory.onAmountChanged += (amount) => waterTankLevel.DOScale(new Vector3(1, waterReservatory.GetWaterPercentage(), 1), _waterTankTweenDuration);
+        waterReservatory.onAmountChanged += (amount) => waterTankLevel.DOScale(new Vector3(1, waterReservatory.GetWaterPercentage()/100, 1), _waterTankTweenDuration);
     }
 }

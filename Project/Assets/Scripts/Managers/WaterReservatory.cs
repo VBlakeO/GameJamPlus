@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using static UnityEditor.Experimental.GraphView.GraphView;
 
 public class WaterReservatory : Singleton<WaterReservatory>
 {
@@ -11,6 +12,7 @@ public class WaterReservatory : Singleton<WaterReservatory>
     protected override void Awake()
     {
         base.Awake();
+        _currentWaterAmount = Mathf.Clamp(_currentWaterAmount, 0f, _reservatoryCapacity);
     }
 
     public void AddWater(float water)
