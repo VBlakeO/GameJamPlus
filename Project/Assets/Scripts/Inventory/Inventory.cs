@@ -23,6 +23,7 @@ public class Inventory : Singleton<Inventory>, IPersistent
     protected override void Awake()
     {
         base.Awake();
+        AddPlant("samplePlant", 20);
 
         ((IPersistent)this).Subscribe();
     }
@@ -126,6 +127,7 @@ public class Inventory : Singleton<Inventory>, IPersistent
         }
 
         _data = JsonConvert.DeserializeObject<Data>(File.ReadAllText(persistentDataPath + _persistentPath));
+        _data.plants.Add("samplePlant", 20);
         if (onInventoryChanged != null)
             onInventoryChanged.Invoke(_data);
     }
