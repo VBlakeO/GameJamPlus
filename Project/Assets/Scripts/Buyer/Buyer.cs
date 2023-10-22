@@ -4,7 +4,7 @@ using DG.Tweening;
 
 public class Buyer : Singleton<Buyer>
 {
-    [SerializeField] Transform _tweenTransform;
+    [SerializeField] Transform truckTransform;
     [SerializeField] Transform _tweenTargetPositionCatchPoint;
     [SerializeField] Transform _tweenTargetPositionOffPoint;
 
@@ -12,6 +12,12 @@ public class Buyer : Singleton<Buyer>
 
     [Range(0, 1)][SerializeField] float _collectTimeout = 1;
     public float _collectTimeInSeconds = 5;
+
+    protected override void Awake()
+    {
+        base.Awake();
+        truckTransform.localScale = Vector3.zero;
+    }
 
     void Update()
     {
@@ -49,23 +55,25 @@ public class Buyer : Singleton<Buyer>
 
     public void GetSilosContent()
     {
-        _tweenTransform.localScale = Vector3.zero;
-        _tweenTransform.position = _tweenTargetPositionCatchPoint.position;
+        truckTransform.localScale = Vector3.zero;
+        truckTransform.position = _tweenTargetPositionCatchPoint.position;
 
         Sequence sequence = DOTween.Sequence();
-        sequence.Append(_tweenTransform.DOScale(Vector3.one, .5f));
+        sequence.Append(truckTransform.DOScale(Vector3.one, .5f));
         sequence.AppendInterval(1);
+
         sequence.onComplete += BuyAll;
+        sequence.onComplete += MoveOffSilos;
     }
 
     public void MoveOffSilos()
     {
-        _tweenTransform.localScale = Vector3.zero;
-        _tweenTransform.position = _tweenTargetPositionCatchPoint.position;
-
         Sequence sequence = DOTween.Sequence();
         sequence.AppendInterval(1);
-        sequence.Append(_tweenTransform.DOMove(_tweenTargetPositionOffPoint.position, 2));
-        sequence.Append(_tweenTransform.DOScale(Vector3.zero, 2));
+        sequence.Append(truckTransform.DOScale(Vector3.zero, 1));
+        sequence.Append(truckTransform.DOMove(_tweenTargetPositionOffPoint.position, 2));
+
+        sequence.onComplete += () => truckTransform.localScale = Vector3.zero;
+        sequence.onComplete += () => truckTransform.position = _tweenTargetPositionCatchPoint.position;
     }
 }
