@@ -18,8 +18,12 @@ MonoBehaviour:
   buyPrice: 1
   sellPrice: 3
   description: Starchy, tuberous root, a staple in many global cuisines.
-  budStateDuration: 1
-  foliageStateDuration: 1
-  rootStateDuration: 1
-  consumptionSpeed: 1
-  plantStateObjects: []
+  budStateDuration: 3
+  foliageStateDuration: 2
+  rootStateDuration: 5
+  consumptionSpeed: 0.04
+  plantStateObjects:
+  - {fileID: 5641743400110448545, guid: ce4f30fb76673b94bb5eb5ba57df0df1, type: 3}
+  - {fileID: 7200207736773263158, guid: fc1f754212f637841bb4043e5b50ccbd, type: 3}
+  - {fileID: 7096886693675563324, guid: 67cb1d1203006ea4f8ff21fa3a2fee41, type: 3}
+  - {fileID: 2389223134441906129, guid: 1cb1e41ebf6881446999276fae9cafca, type: 3}

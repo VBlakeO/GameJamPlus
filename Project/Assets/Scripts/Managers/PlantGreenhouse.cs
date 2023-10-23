@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine.Events;
+using UnityEngine.UI;
 using UnityEngine;
 using System;
 
@@ -8,10 +9,9 @@ public class PlantGreenhouse : MonoBehaviour
     public List<PlantingSoil> plantingSoils = null;
     public string lastPlantationId = "";
     private int _seedsPlanted = 0;
-    private int _currentButton = 0;
     [SerializeField] private GameObject[] buttonsObj;
     [SerializeField] private BoxCollider[] buttonsCollider;
-
+    [SerializeField] private Image currentPlantImage;
     public Action OnFertilize = null;
     public Action OnHarvest = null;
   
@@ -45,6 +45,12 @@ public class PlantGreenhouse : MonoBehaviour
             }
         }
 
+        if (currentPlantImage)
+        {
+            currentPlantImage.gameObject.SetActive(true);
+            currentPlantImage.sprite = plantingSoils[0].plant.icon;
+        }
+
         OnFertilize?.Invoke();
         ChangeButton(1);
     }
@@ -69,7 +75,6 @@ public class PlantGreenhouse : MonoBehaviour
     private void ChangeButton(int button)
     {
         DisableAllButton();
-        _currentButton = button;
 
         buttonsObj[button].SetActive(true);
 
