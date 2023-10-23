@@ -16,6 +16,7 @@ public class Buyer : Singleton<Buyer>
     protected override void Awake()
     {
         base.Awake();
+
         truckTransform.localScale = Vector3.zero;
         truckTransform.position = _tweenTargetPositionCatchPoint.position;
     }
@@ -67,7 +68,7 @@ public class Buyer : Singleton<Buyer>
 
         Sequence sequence = DOTween.Sequence();
         sequence.Append(truckTransform.DOScale(Vector3.one, .5f));
-        sequence.AppendInterval(.5f);
+        sequence.AppendInterval(1f);
 
         sequence.onComplete += BuyAll;
         sequence.onComplete += MoveOffSilos;
@@ -75,12 +76,7 @@ public class Buyer : Singleton<Buyer>
 
     public void MoveOffSilos()
     {
-        Sequence sequence = DOTween.Sequence();
-        sequence.AppendInterval(1);
-        sequence.Append(truckTransform.DOScale(Vector3.zero, 1));
-        sequence.Append(truckTransform.DOMove(_tweenTargetPositionOffPoint.position, 2));
-
-        sequence.onComplete += () => truckTransform.localScale = Vector3.zero;
-        sequence.onComplete += () => truckTransform.position = _tweenTargetPositionCatchPoint.position;
+        truckTransform.DOScale(Vector3.zero, 1);
+        truckTransform.DOMove(_tweenTargetPositionOffPoint.position, 2);
     }
 }
