@@ -47,15 +47,11 @@ public class Inventory : Singleton<Inventory>, IPersistent
 
         if (plants.ContainsKey(id))
         {
-            Debug.Log(" AddPlant "+ id + " " + quantity);
             int previousQuantity = plants[id];
 
             int futureQuantity = Mathf.Clamp(previousQuantity + quantity, 0, maxQuantity);
-            Debug.Log(" futureQuantity " + futureQuantity);
 
             plants[id] = futureQuantity;
-
-            Debug.Log(" plants[id] " + plants[id]);
 
 
             if (onPlantQuantityChanged != null)
