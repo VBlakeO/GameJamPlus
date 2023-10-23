@@ -10,11 +10,11 @@ namespace UI
         [SerializeField] string _id;
         public string id => _id;
 
-        [SerializeField] Image _icon;
-        public Image icon => _icon;
+        [SerializeField] Image _iconImage;
+        public Image iconImage => _iconImage;
 
-        [SerializeField] TextMeshProUGUI _quantity;
-        public TextMeshProUGUI quantity => _quantity;
+        [SerializeField] TextMeshProUGUI _quantityText;
+        public TextMeshProUGUI quantityText => _quantityText;
 
         [SerializeField] GameObject selected;
 
@@ -23,10 +23,17 @@ namespace UI
             GetComponent<Button>().onClick.AddListener(() => Inventory.Instance.Select(id));
         }
 
-        public void Set(string id)
+        public void Set(string id, int quantity)
         {
             this._id = id;
-            icon.sprite = PlantStaticsHolder.Instance.plantStatics[id].icon;
+            iconImage.sprite = PlantStaticsHolder.Instance.plantStatics[id].icon;
+            SetQuantity(quantity);
+        }
+
+        public void SetQuantity(int quantity)
+        {
+            quantityText.text = quantity.ToString();
+            quantityText.gameObject.SetActive(quantity > 0);
         }
 
         public void OnSelectedChanged(bool b)

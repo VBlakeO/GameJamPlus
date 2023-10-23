@@ -36,8 +36,6 @@ namespace UI
             base.Awake();
 
             _tweenStartPositionY = transform.position.y;
-
-
         }
 
         void Start()
@@ -70,7 +68,12 @@ namespace UI
                 instance = MonoBehaviour.Instantiate(_itemPrefab, _itemsContent);
 
                 Plant plant = instance.GetComponent<Plant>();
-                plant.Set(item.Key);
+                plant.Set(item.Key, global::Inventory.Instance.plants[item.Key]);
+                global::Inventory.Instance.onPlantQuantityChanged += (id, qnt) =>
+                {
+                    if (id == plant.id)
+                        plant.SetQuantity(qnt);
+                };
                 _plantsUI.Add(item.Key, plant);
                 instance.SetActive(false);
             }
@@ -98,7 +101,7 @@ namespace UI
                 return;
             }
 
-            _plantsUI[id].quantity.text = quantity.ToString();
+            _plantsUI[id].quantityText.text = quantity.ToString();
             _plantsUI[id].gameObject.SetActive(quantity > 0);
 
             if (String.IsNullOrEmpty(selected) || (selected == id && quantity == 0))

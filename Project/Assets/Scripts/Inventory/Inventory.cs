@@ -18,8 +18,6 @@ public class Inventory : Singleton<Inventory>, IPersistent
     public Action<string, int> onPlantQuantityChanged;
     public Action<string> onPlantTakeFailed;
 
-
-
     protected override void Awake()
     {
         base.Awake();
@@ -137,6 +135,6 @@ public class Inventory : Singleton<Inventory>, IPersistent
     {
         public int maxQuantity = 99;
 
-        public Dictionary<string, int> plants = new Dictionary<string, int>(); //<id, quantity>
+        public Dictionary<string, int> plants = new Dictionary<string, int>();
     }
 }
