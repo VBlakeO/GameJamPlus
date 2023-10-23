@@ -17,6 +17,7 @@ public class Buyer : Singleton<Buyer>
     {
         base.Awake();
         truckTransform.localScale = Vector3.zero;
+        truckTransform.position = _tweenTargetPositionCatchPoint.position;
     }
 
     void Update()
