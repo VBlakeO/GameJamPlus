@@ -49,6 +49,12 @@ public class Buyer : Singleton<Buyer>
 
     public void Buy(Silo silo)
     {
+        if (silo.id == null)
+            return;
+
+        if (silo.quantity <= 0)
+            return;
+
         int siloPrice = PlantStaticsHolder.Instance.plantStatics[silo.id].sellPrice * silo.quantity;
         silo.ResetPlant();
         PlayerCurrency.Instance.Add(siloPrice);
@@ -61,7 +67,7 @@ public class Buyer : Singleton<Buyer>
 
         Sequence sequence = DOTween.Sequence();
         sequence.Append(truckTransform.DOScale(Vector3.one, .5f));
-        sequence.AppendInterval(1);
+        sequence.AppendInterval(.5f);
 
         sequence.onComplete += BuyAll;
         sequence.onComplete += MoveOffSilos;
