@@ -68,7 +68,11 @@ namespace UI
                 instance = MonoBehaviour.Instantiate(_itemPrefab, _itemsContent);
 
                 Plant plant = instance.GetComponent<Plant>();
-                plant.Set(item.Key, global::Inventory.Instance.plants[item.Key]);
+
+                int quantity = 0;
+                global::Inventory.Instance.plants.TryGetValue(item.Key, out quantity);
+
+                plant.Set(item.Key, quantity);
                 global::Inventory.Instance.onPlantQuantityChanged += (id, qnt) =>
                 {
                     if (id == plant.id)
