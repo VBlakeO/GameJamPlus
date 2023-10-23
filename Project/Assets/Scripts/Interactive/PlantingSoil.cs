@@ -24,7 +24,7 @@ public class PlantingSoil : MonoBehaviour, IInteract
     public void Interact()
     {
         if (!fertilizedLand)
-            Fertilize("samplePlant");
+            Fertilize(UI.Inventory.Instance.selected);
         else
             Harvest();
     }
