@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class RenderPlantColorControl : MonoBehaviour
@@ -31,13 +29,14 @@ public class RenderPlantColorControl : MonoBehaviour
 
     public void UpadateColor(Color[] colors)
     {
-        for (int i = 0; i < colors.Length; i++)
+        Renderer renderer = GetComponent<Renderer>();
+        int materialCount = renderer.sharedMaterials.Length;
+
+        for (int i = 0; i < materialCount && i < colors.Length; i++)
         {
             MaterialPropertyBlock propertyBlock = new MaterialPropertyBlock();
-            Renderer renderer = GetComponent<Renderer>();
             renderer.GetPropertyBlock(propertyBlock, i);
             propertyBlock.SetColor(property, colors[i]);
-                
             renderer.SetPropertyBlock(propertyBlock, i);
         }
     }

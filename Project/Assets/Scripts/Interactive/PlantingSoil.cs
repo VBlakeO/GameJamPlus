@@ -45,7 +45,7 @@ public class PlantingSoil : MonoBehaviour, IInteract
 
         currentPlantObj = PoolingManager.Instance.plants[id][0].Pool.Get();
         currentPlantObj.transform.position = transform.position;
-        meshRenderer.enabled = false;
+        //meshRenderer.enabled = false;
     }
 
     public void Harvest()
